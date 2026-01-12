@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  font-synthesis: none;
+  text-size-adjust: 100%;
+  color: #0D0D0D;
+  background-color: #F8F9FA;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Amélioration de la netteté du texte */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Styles pour les titres */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: var(--text-color);
+}
+
+/* Styles pour les paragraphes */
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* Amélioration du contraste et de la lisibilité */
+.text-sharp {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeSpeed;
+}
+
+.text-smooth {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Import de la police Inter depuis Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Variables CSS pour les thèmes personnalisés */
+:root {
+  --primary-color: #FFD700;
+  --secondary-color: #E3F2FD;
+  --font-size: 16px;
+  --bg-color: #F8F9FA;
+  --text-color: #0D0D0D;
+  --card-bg: #FFFFFF;
+  --border-color: #E0E0E0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Thème sombre */
+body.dark-mode {
+  --bg-color: #1A1A1A;
+  --text-color: #F8F9FA;
+  --card-bg: #2D2D2D;
+  --border-color: #404040;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Thème clair */
+body.light-mode {
+  --bg-color: #F8F9FA;
+  --text-color: #0D0D0D;
+  --card-bg: #FFFFFF;
+  --border-color: #E0E0E0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Appliquer les variables CSS aux éléments principaux */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: var(--font-size);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

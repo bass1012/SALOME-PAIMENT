@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test de l'API Backend</h1>
+    
+    <div class="test-section">
+        <h2>Test de l'endpoint d'authentification directe</h2>
+        <button onclick="testAuthDirecte()">Tester authentification_directe</button>
+        <div id="auth-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test de connexion simple</h2>
+        <button onclick="testConnection()">Tester la connexion au backend</button>
+        <div id="connection-result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+
+        async function testConnection() {
+            const resultDiv = document.getElementById('connection-result');
+            try {
+                console.log('Testing connection to:', API_BASE);
+                const response = await fetch(API_BASE + '/sessions-paiement/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    mode: 'cors'
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Connexion réussie!</h3>
+                            <p>Status: ${response.status}</p>
+                            <p><strong>Réponse:</strong></p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h3>❌ Erreur de connexion</h3>
+                            <p>Status: ${response.status}</p>
+                            <p>Text: ${await response.text()}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Connection error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Erreur de connexion</h3>
+                        <p><strong>Erreur:</strong> ${error.message}</p>
+                        <p><strong>Stack:</strong> ${error.stack}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testAuthDirecte() {
+            const resultDiv = document.getElementById('auth-result');
+            try {
+                console.log('Testing auth directe endpoint...');
+                const payload = {
+                    telephone: '0123456789',
+                    client: {
+                        nom: 'Test',
+                        prenom: 'User',
+                        sexe: 'M'
+                    }
+                };
+                
+                const response = await fetch(API_BASE + '/sessions-paiement/authentification_directe/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    mode: 'cors',
+                    body: JSON.stringify(payload)
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Authentification directe réussie!</h3>
+                            <p>Status: ${response.status}</p>
+                            <p><strong>Réponse:</strong></p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <h3>❌ Erreur d'authentification</h3>
+                            <p>Status: ${response.status}</p>
+                            <p>Text: ${await response.text()}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Auth error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Erreur d'authentification</h3>
+                        <p><strong>Erreur:</strong> ${error.message}</p>
+                        <p><strong>Stack:</strong> ${error.stack}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-test connection on page load
+        window.onload = function() {
+            console.log('Page loaded, testing connection...');
+            testConnection();
+        };
+    </script>
+</body>
+</html>
